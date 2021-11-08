@@ -8,11 +8,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+/**
+ * @covers \App\Http\Controllers\VideosController
+ */
 class VideoTest extends TestCase
 {
     use RefreshDatabase;
     /**
-     *
      * @test
      */
     public function users_can_view_videos()
@@ -39,4 +41,11 @@ class VideoTest extends TestCase
         $response->assertSee('Here description');
         $response->assertSee('December 13');
     }
+
+    public function users_cannot_view_not_existing_videos(){
+        $response = $this->get('/videos/999');
+        $response->assertStatus(404);
+
+    }
+
 }
