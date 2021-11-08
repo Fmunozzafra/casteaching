@@ -35,3 +35,7 @@ Route::get('/videos/1', function () {
 });
 
 */
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
