@@ -4,7 +4,9 @@ use App\Models\Team;
 use App\Models\User;
 use App\Models\Video;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 
 if(! function_exists('create_default_user')) {
     function create_default_user() {
@@ -16,16 +18,11 @@ if(! function_exists('create_default_user')) {
             'password' => Hash::make(config('casteaching.default_user.password','12345678'))
         ]);
 
-        try {
-            Team::create([
-                'name' => $user->name . "'s Team",
-                'user_id' => $user->id,
-                'personal_team' => true
-            ]);
-        } catch (\Exception $exception) {
+        $user->superadmin = true;
+        $user->save();
 
-        }
 
+        add_personal_team($user);
     }
 }
 
@@ -44,3 +41,90 @@ if(! function_exists('create_default_video')) {
         ]);
     }
 }
+
+if(! function_exists('create_superadmin_user')) {
+    function create_superadmin_user()
+    {
+        $user = User::create([
+            'name' => 'SuperAdmin',
+            'email' => 'superadmin@casteaching.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        $user->superadmin = true;
+        $user->save();
+
+        add_personal_team($user);
+
+        return $user;
+    }
+}
+
+if(! function_exists('add_personal_team')) {
+
+    /**
+     * @param $user
+     */
+    function add_personal_team($user): void
+    {
+        try {
+            Team::forceCreate([
+                'name' => $user->name . "'s Team",
+                'user_id' => $user->id,
+                'personal_team' => true
+            ]);
+        } catch (\Exception $exception) {
+
+        }
+    }
+}
+
+if(! function_exists('define_gates')) {
+    function define_gates(){
+
+        Gate::before(function ($user, $ability) {
+            if($user->isSuperAdmin()) {
+                return true;
+            }
+        });
+
+    }
+}
+
+if(! function_exists('create_regular_user')) {
+    function create_regular_user()
+    {
+        $user = User::create([
+            'name' => 'RegularUser',
+            'email' => 'regularuser@casteaching.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        add_personal_team($user);
+
+        return $user;
+    }
+}
+
+if(! function_exists('create_video_manager_user')) {
+    function create_video_manager_user()
+    {
+        $user = User::create([
+            'name' => 'VideosManager',
+            'email' => 'videosmanager@casteaching.com',
+            'password' => Hash::make('12345678')
+        ]);
+
+        add_personal_team($user);
+
+        Permission::firstOrCreate(['name' => 'videos_manage_index']);
+        $user->givePermissionTo('videos_manage_index');
+
+        return $user;
+    }
+}
+
+if(! function_exists('create_permissions')) {
+    function create_permissions() {
+        Permission::firstOrCreate(['name' => 'videos_manage_index']);
+    }}

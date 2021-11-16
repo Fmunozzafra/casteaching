@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\Hash;
     {
         create_default_user();
 
+        create_superadmin_user();
+
+        create_regular_user();
+
         create_default_videos();
+
+        create_permissions();
+
+        create_video_manager_user();
     }
 }
