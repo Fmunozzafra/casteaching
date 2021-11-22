@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Hash;
 
         create_default_videos();
 
+        create_sample_videos();
+
         create_permissions();
 
         create_video_manager_user();

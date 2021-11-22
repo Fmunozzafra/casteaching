@@ -128,3 +128,26 @@ if(! function_exists('create_permissions')) {
     function create_permissions() {
         Permission::firstOrCreate(['name' => 'videos_manage_index']);
     }}
+
+if(! function_exists('create_sample_videos')) {
+    function create_sample_videos() {
+        $video1 = Video::create([
+        'title' => 'Video 1',
+        'description' => 'aaaaa',
+        'url' => 'https://youtu.be/syqUFgWSKcA'
+        ]);
+
+        $video2 = Video::create([
+                'title' => 'Video 2',
+                'description' => 'aaaaa',
+                'url' => 'https://youtu.be/syqUFgWSKcA'
+                ]);
+
+        $video3 = Video::create([
+                'title' => 'Video 3',
+                'description' => 'aaaaa',
+                'url' => 'https://youtu.be/syqUFgWSKcA'
+                ]);
+        return [$video1, $video2, $video3];
+    }
+}

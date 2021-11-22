@@ -6,13 +6,20 @@ use Illuminate\Http\Request;
 
 class VideosManageController extends Controller
 {
+
+    public static function testedBy() {
+        return VideosManageControllerTest::class;
+    }
+
     /**
      * R -> Retrieve -> Llisto
      *
      */
     public function index()
     {
-        return view('videos.manage.index');
+        return view('videos.manage.index',[
+            'videos' => Video::all();
+        ]);
     }
 
     /**
