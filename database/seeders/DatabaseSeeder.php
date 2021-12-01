@@ -26,5 +26,7 @@ use Illuminate\Support\Facades\Hash;
         create_permissions();
 
         create_video_manager_user();
+
+        create_user_manager_user();
     }
 }
