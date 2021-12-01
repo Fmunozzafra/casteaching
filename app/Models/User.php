@@ -11,6 +11,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Tests\Unit\UserTest;
 
 class User extends Authenticatable
 {
