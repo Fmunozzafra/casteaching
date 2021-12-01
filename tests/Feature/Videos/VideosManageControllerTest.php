@@ -4,13 +4,8 @@ namespace Tests\Feature\Videos;
 
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 /**
@@ -21,6 +16,17 @@ class VideosManageControllerTest extends TestCase
 {
 
     use RefreshDatabase;
+    /**
+     * @test
+     */
+    public function user_with_permissions_can_see_add_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $response = $this->get('/manage/videos');
+
+    }
+
     /**
      * @test
      */
