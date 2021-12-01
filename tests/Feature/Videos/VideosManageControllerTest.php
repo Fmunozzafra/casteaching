@@ -41,12 +41,9 @@ class VideosManageControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewIs('videos.manage.index');
         $response->assertViewHas('videos',function($v) use ($videos) {
-<<<<<<< HEAD
             return $v->count() === count($videos) && get_class($v) === Collection::class &&
                 get_class($videos[0]) === Video::class;
-=======
             return $v->count() === count($videos) && get_class($v) === Collection::class && get_class($videos[0]) === Video::class;
->>>>>>> 2be93adb9a5ffdd4e38e013ed3010a5ad4de9b7a
         });
 
         foreach ($videos as $video) {
