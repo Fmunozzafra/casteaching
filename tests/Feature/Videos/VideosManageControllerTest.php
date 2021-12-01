@@ -4,13 +4,8 @@ namespace Tests\Feature\Videos;
 
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\ResponseTrait;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
 /**
@@ -34,9 +29,10 @@ class VideosManageControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('videos.manage.index');
-        $response->assertViewHas('videos'.function($v) use ($videos) {
-            return $v->count() === count($videos) && get_class($v) === Collection::class && get_class($videos[0]) === Video::class;
-                });
+        $response->assertViewHas('videos',function($v) use ($videos) {
+            return $v->count() === count($videos) && get_class($v) === Collection::class &&
+                get_class($videos[0]) === Video::class;
+        });
 
         foreach ($videos as $video) {
             $response->assertSee($video->id);
