@@ -129,7 +129,7 @@ if(! function_exists('create_video_manager_user')) {
 if(! function_exists('create_permissions')) {
     function create_permissions() {
         Permission::firstOrCreate(['name' => 'videos_manage_index']);
-        Permission::firstOrCreate(['name' => 'videos_manage_create  ']);
+        Permission::firstOrCreate(['name' => 'videos_manage_create']);
     }}
 
 if(! function_exists('create_sample_videos')) {
