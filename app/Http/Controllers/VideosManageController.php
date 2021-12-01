@@ -27,10 +27,10 @@ class VideosManageController extends Controller
     /**
      * C -> Create -> Mostra el formulari de creació
      */
-    public function create()
-    {
+    //public function create()
+    //{
         //
-    }
+    //}
 
     /**
      * C -> Create -> Guarda a la base de dades el nou video
