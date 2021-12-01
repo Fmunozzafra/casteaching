@@ -45,6 +45,8 @@
                              </div>
                              <div class="mt-5 md:mt-0 md:col-span-2">
                                  <form data-qa="form_video_create" action="#" method="POST" >
+
+                                     @csrf
                                      <div class="shadow sm:rounded-md sm:overflow-hidden">
                                          <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
 
