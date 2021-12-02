@@ -40,28 +40,27 @@ class VideosManageController extends Controller
         return redirect()->route('manage.videos');
     }
 
-    /**
-     * R -> NO LLISTA -> Individual ->
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * U -> update -> Form
-     */
     public function edit($id)
     {
-        //
+        return view('videos.manage.edit', ['video' => Video::findorFail($id)]);
     }
 
-    /**
-     * U -> update -> Processarà el Form i guardara les modificacions
-     */
     public function update(Request $request, $id)
     {
-        //
+        $video = Video::findorFail($id);
+        $video->title = $request->title;
+        $video->description = $request->description;
+        $video->url = $request->url;
+        $video->save();
+
+        session()->flash('status', 'Successfully updated');
+        return redirect()->route('manage.videos');
+
     }
 
     public function destroy($id) {

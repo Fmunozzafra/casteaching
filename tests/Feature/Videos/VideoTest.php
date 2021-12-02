@@ -40,6 +40,7 @@ class VideoTest extends TestCase
         $response->assertSee('Ubuntu 101');
         $response->assertSee('Here description');
         $response->assertSee('13 de desembre de 2020');
+        $response->assertSee('https://www.youtube.com/watch?v=6SxjClAdXZ8');
     }
 
     public function users_cannot_view_not_existing_videos(){
