@@ -12,7 +12,7 @@
                      </div>
                      <div class="ml-3">
                          <p class="text-sm font-medium text-green-800">
-                             Successfully created
+                            {{ session('status') }}
                          </p>
                      </div>
                      <div class="ml-auto pl-3">

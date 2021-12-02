@@ -119,8 +119,10 @@ if(! function_exists('create_video_manager_user')) {
 
         Permission::firstOrCreate(['name' => 'videos_manage_index']);
         Permission::firstOrCreate(['name' => 'videos_manage_create']);
+        Permission::firstOrCreate(['name' => 'videos_manage_destroy']);
         $user->givePermissionTo('videos_manage_index');
         $user->givePermissionTo('videos_manage_create');
+        $user->givePermissionTo('videos_manage_destroy');
 
         return $user;
     }
@@ -130,6 +132,7 @@ if(! function_exists('create_permissions')) {
     function create_permissions() {
         Permission::firstOrCreate(['name' => 'videos_manage_index']);
         Permission::firstOrCreate(['name' => 'videos_manage_create']);
+        Permission::firstOrCreate(['name' => 'videos_manage_destroy']);
     }}
 
 if(! function_exists('create_sample_videos')) {
