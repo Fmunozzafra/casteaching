@@ -59,34 +59,44 @@ class VideosManageControllerTest extends TestCase
     /**
      * @test
      */
-    public function user_with_permissions_can_store_videos(){
+    public function user_without_permissions_cannot_store_videos() {
+        $this->loginAsRegularUser();
+
+        $video = objectify($videoArray = [
+            'title' => 'title',
+            'description' => 'description',
+            'url' => 'url',
+        ]);
+
+        $response = $this->post('/manage/videos',$videoArray);
+
+        $response->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function user_with_permissions_can_store_videos()
+    {
         $this->loginAsVideoManager();
 
-        $video = objectify([
-            'title' => 'HTTP for noobs',
-            'description' => 'Te ensenyo tot el que se sobre HTTP',
-            'url' => 'https://tubeme.acacha.org/http',
+        $video = objectify($videoArray = [
+            'title' => 'title',
+            'description' => 'description',
+            'url' => 'url',
         ]);
 
-        // API ENDPOINT
-        $response = $this->post('/manage/videos',[
-            'title' => 'HTTP for noobs',
-            'description' => 'Te ensenyo tot el que se sobre HTTP',
-            'url' => 'https://tubeme.acacha.org/http',
-        ]);
+        $response = $this->post('/manage/videos',$videoArray);
 
         $response->assertRedirect(route('manage.videos'));
         $response->assertSessionHas('status', 'Successfully created');
 
-        // 3 Asserting
         $videoDB = Video::first();
-
         $this->assertNotNull($videoDB);
         $this->assertEquals($videoDB->title,$video->title);
         $this->assertEquals($videoDB->description,$video->description);
         $this->assertEquals($videoDB->url,$video->url);
         $this->assertNull($video->published_at);
-
     }
 
     /**
@@ -109,8 +119,8 @@ class VideosManageControllerTest extends TestCase
     {
         Permission::firstOrCreate(['name' => 'videos_manage_index']);
         $user = User::create([
-            'name' => 'Pepe',
-            'email' => 'Pepe',
+            'name' => 'Gabriel',
+            'email' => 'gabriel@casteaching.com',
             'password' => Hash::make('12345678')
         ]);
         $user->givePermissionTo('videos_manage_index');
