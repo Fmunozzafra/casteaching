@@ -23,6 +23,27 @@ class VideosManageControllerTest extends TestCase
     /**
      * @test
      */
+    public function user_with_permissions_can_destroy_videos(){
+
+            $this->loginAsVideoManager();
+        $video = Video::create([
+            'title' => 'title',
+            'description' => 'description',
+            'url' => 'url',
+        ]);
+
+        $response = $this->delete('/manage/videos/' . $video->id);
+        $response->assertRedirect(route('manage.videos'));
+        $response->assertSessionHas('status', 'Successfully removed');
+
+
+        $this->assertNull(Video::find($video->id));
+        $this->assertNull($video->fresh());
+    }
+
+    /**
+     * @test
+     */
     public function user_with_permissions_can_store_videos(){
         $this->loginAsVideoManager();
 
