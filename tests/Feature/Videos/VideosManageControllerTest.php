@@ -25,7 +25,7 @@ class VideosManageControllerTest extends TestCase
      */
     public function user_with_permissions_can_destroy_videos(){
 
-            $this->loginAsVideoManager();
+        $this->loginAsVideoManager();
         $video = Video::create([
             'title' => 'title',
             'description' => 'description',

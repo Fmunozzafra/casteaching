@@ -156,9 +156,9 @@
                                     <form class="inline" action="/manage/videos/{{$video->id}}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a href="/videos/{{$video->id}}" class="text-indigo-600 hover:text-indigo-900" onclick="event.preventDefault();
-                                                this.closest('form').submit();">Delete</a>
-
+                                        <a href="/videos/{{$video->id}}" class="text-indigo-600 hover:text-indigo-900"
+                                           onclick="event.preventDefault();
+                                        this.closest('form').submit();">Delete</a>
                                     </form>
                                 </td>
                             </tr>
