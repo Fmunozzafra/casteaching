@@ -88,12 +88,13 @@ class VideoApiTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->has('id')
-                ->where('title', $newVideo['title'])
-                ->where('description', $newVideo['description'])
-                ->where('url', $newVideo['url'])
-                ->etc()
+            ->assertJson(function (AssertableJson $json) use ($newVideo) {
+                return $json->has('id')
+                    ->where('title', $newVideo['title'])
+                    ->where('description', $newVideo['description'])
+                    ->where('url', $newVideo['url'])
+                    ->etc();
+            }
             );
 
         $this->assertNotNull($dbVideo = Video::find($response['id']));
@@ -184,11 +185,12 @@ class VideoApiTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->has('id')
-                ->where('title', $video['title'])
-                ->where('url', $video['url'])
-                ->etc()
+            ->assertJson(function (AssertableJson $json) use ($video) {
+                return $json->has('id')
+                    ->where('title', $video['title'])
+                    ->where('url', $video['url'])
+                    ->etc();
+            }
             );
 
         $this->assertNull(Video::find($response['id']));
@@ -247,11 +249,12 @@ class VideoApiTest extends TestCase
 
         $response
             ->assertStatus(201)
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->has('id')
-                ->where('title', $video['title'])
-                ->where('url', $video['url'])
-                ->etc()
+            ->assertJson(function (AssertableJson $json) use ($video) {
+                return $json->has('id')
+                    ->where('title', $video['title'])
+                    ->where('url', $video['url'])
+                    ->etc();
+            }
             );
 
         $newVideo = Video::find($response['id']);
@@ -296,11 +299,12 @@ class VideoApiTest extends TestCase
         $response->assertSee($video->id);
 
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('id', $video->id)
-                ->where('title', $video->title)
-                ->where('url', $video->url)
-                ->etc()
+            ->assertJson(function (AssertableJson $json) use ($video) {
+                return $json->where('id', $video->id)
+                    ->where('title', $video->title)
+                    ->where('url', $video->url)
+                    ->etc();
+            }
             );
     }
 

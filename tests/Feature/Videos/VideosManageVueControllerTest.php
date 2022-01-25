@@ -3,6 +3,7 @@
 namespace Tests\Feature\Videos;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
 
@@ -10,9 +11,7 @@ class VideosManageVueControllerTest extends TestCase
 {
     use RefreshDatabase, CanLogin;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function user_with_permission_can_manage_videos_index()
     {
         $videos = create_sample_videos();
@@ -26,15 +25,15 @@ class VideosManageVueControllerTest extends TestCase
 
         $response->assertViewMissing('videos');
 
+        // TODO -> Not working per la carrega asíncrona
+        // SSR? Explain
         foreach ($videos as $video) {
             $response->assertSee($video->id);
             $response->assertSee($video->title);
         }
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function regular_users_cannot_manage_videos()
     {
         $this->loginAsRegularUser();
@@ -42,9 +41,7 @@ class VideosManageVueControllerTest extends TestCase
         $response->assertstatus(403);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function guest_users_cannot_manage_videos()
     {
         $response = $this->get('/vue/manage/videos');
