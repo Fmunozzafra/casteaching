@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import casteaching from 'casteaching_fmz';
+import casteaching from '@acacha/casteaching';
 import Vue from 'vue'
 import VideosList from "./components/VideosList";
 import VideoForm from "./components/VideoForm";
