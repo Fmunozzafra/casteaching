@@ -20,7 +20,7 @@
                                         Title
                                     </label>
                                     <div class="mt-1">
-                                        <input required type="text" id="title" v-model="video.title" name="title" rows="3" class="shadow-sm mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2" placeholder="Titol del vídeo"></input>
+                                        <input required type="text" id="title" v-model="video.title" name="title" rows="3" class="shadow-sm mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2" placeholder="Titol del vídeo"/>
                                     </div>
                                     <p class="mt-2 text-sm text-gray-500">
                                         Titol curt del vídeo
@@ -91,8 +91,11 @@ export default {
         },
         store() {
             try {
-                casteaching.video.create({name: 'PHP 101', description: 'Bla bla bla',  url: 'https://youtube.com/...' })
-
+                window.api.video.create({
+                    title: this.video.title,
+                    description: this.video.description,
+                    url: this.video.url
+                })
                 bus.$emit('created')
                 bus.$emit('status', 'Video created successfully')
             } catch (error) {
@@ -101,8 +104,11 @@ export default {
         },
         update() {
             try {
-                casteaching.video.update(1,{name: 'PHP 101', description: 'Bla bla bla',  url: 'https://youtube.com/...' })
-
+                window.api.video.update(this.video.id, {
+                    title: this.video.title,
+                    description: this.video.description,
+                    url: this.video.url
+                })
                 bus.$emit('updated')
                 bus.$emit('status', 'Video updated successfully')
             } catch (error) {

@@ -5,9 +5,7 @@
                 <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
                         Videos
-                        <button @click="refresh">
-                            refresh
-                        </button>
+                        <button @click="refresh">Refresh</button>
                     </h3>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200">
@@ -47,7 +45,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <video-show-link :video="video"></video-show-link>
                             <video-edit-link :video="video"></video-edit-link>
-                            <video-destroy-link :video="video" @removed="refresh()"></video-destroy-link>
+                            <video-destroy-link :video="video" @removed="refresh"></video-destroy-link>
                         </td>
                     </tr>
                     </tbody>
@@ -58,69 +56,43 @@
 </template>
 
 <script>
-
+import bus from "../bus.js";
 import VideoShowLink from "./VideoShowLink";
 import VideoEditLink from "./VideoEditLink";
 import VideoDestroyLink from "./VideoDestroyLink";
-import bus from '../bus.js'
 
 export default
 {
     name: "VideosList",
-    components: {
+    components:{
         'video-show-link': VideoShowLink,
         'video-edit-link': VideoEditLink,
-        'video-destroy-link': VideoDestroyLink
+        'video-destroy-link': VideoDestroyLink,
     },
     data() {
         return {
-//         [
-//             {
-//                 "id": 1,
-//                 "title": "Vídeo 1",
-//                 "description": "Bla bla bla",
-//                 "url": "https://youtu.be/a-3kfT9hZk4",
-//                 "published_at": null
-//             },
-//     {
-//         "id": 2,
-//         "title": "Vídeo 2",
-//         "description": "Bla bla bla",
-//         "url": "https://youtu.be/a-3kfT9hZk4",
-//         "published_at": null
-//     },
-//     {
-//         "id": 3,
-//         "title": "Vídeo 3",
-//         "description": "Bla bla bla",
-//         "url": "https://youtu.be/a-3kfT9hZk4",
-//         "published_at": null,},
-//     {}
-//
-// ]
             videos: []
         }
     },
     async created() {
-        this.getVideos()
-        bus.$on('created', () => {
-            this.refresh()
+        this.getVideos();
+        bus.$on('created',()=>{
+            this.refresh();
         });
-        bus.$on('updated', () => {
-            this.refresh()
+        bus.$on('updated',()=>{
+            this.refresh();
         });
     },
-    methods: {
-        async getVideos() {
-            this.videos = await casteaching({baseUrl: 'https://casteaching.ferranmunozzafra.me/api'}).videos();
-
+    methods:{
+        async getVideos(){
+            this.videos = await window.api.videos();
         },
-        async refresh() {
-            this.getVideos()
-        }    }
+        async refresh(){
+            this.getVideos();
+        }
+    }
 }
 </script>
-
 
 <style scoped>
 
