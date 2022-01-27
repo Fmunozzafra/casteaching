@@ -26,6 +26,16 @@ if(! function_exists('create_default_user')) {
     }
 }
 
+if (! function_exists('create_sample_video')) {
+    function create_sample_video() {
+        return Video::create([
+            'title' => 'TDD 115',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/jKMTRtkXAF0'
+        ]);
+    }
+}
+
 if(! function_exists('create_default_video')) {
     function create_default_videos()
     {
