@@ -11,8 +11,8 @@
 
         document.getElementById('getVideos').addEventListener('click',async function (){
             try {
-                const videos = await window.casteaching.videos()
-                console.log(videos);
+                const api = casteaching({baseUrl: 'https://casteaching.ferranmunozzafra.me/api'})
+                console.log(api);
             } catch (error) {
                 console.log('Error:');
                 console.log(error);

@@ -7673,7 +7673,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return window.casteaching.video.destroy(_this.video.id);
+                return casteaching.video.destroy(1);
 
               case 3:
                 _this.$emit('removed');
@@ -7839,10 +7839,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     store: function store() {
       try {
-        window.casteaching.video.create({
-          title: this.video.title,
-          description: this.video.description,
-          url: this.video.url
+        casteaching.video.create({
+          name: 'PHP 101',
+          description: 'Bla bla bla',
+          url: 'https://youtube.com/...'
         });
         _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('created');
         _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('status', 'Video created successfully');
@@ -7852,10 +7852,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     update: function update() {
       try {
-        window.casteaching.video.update(this.video.id, {
-          title: this.video.title,
-          description: this.video.description,
-          url: this.video.url
+        casteaching.video.update(1, {
+          name: 'PHP 101',
+          description: 'Bla bla bla',
+          url: 'https://youtube.com/...'
         });
         _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('updated');
         _bus_js__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('status', 'Video updated successfully');
@@ -8060,7 +8060,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return window.casteaching.videos();
+                return casteaching({
+                  baseUrl: 'https://casteaching.ferranmunozzafra.me/api'
+                }).videos();
 
               case 2:
                 _this2.videos = _context2.sent;

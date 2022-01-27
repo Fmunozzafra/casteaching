@@ -112,7 +112,8 @@ export default
     },
     methods: {
         async getVideos() {
-            this.videos = await window.casteaching.videos()
+            this.videos = await casteaching({baseUrl: 'https://casteaching.ferranmunozzafra.me/api'}).videos();
+
         },
         async refresh() {
             this.getVideos()

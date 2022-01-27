@@ -91,11 +91,8 @@ export default {
         },
         store() {
             try {
-                window.casteaching.video.create({
-                    title: this.video.title,
-                    description: this.video.description,
-                    url: this.video.url
-                })
+                casteaching.video.create({name: 'PHP 101', description: 'Bla bla bla',  url: 'https://youtube.com/...' })
+
                 bus.$emit('created')
                 bus.$emit('status', 'Video created successfully')
             } catch (error) {
@@ -104,11 +101,8 @@ export default {
         },
         update() {
             try {
-                window.casteaching.video.update(this.video.id, {
-                    title: this.video.title,
-                    description: this.video.description,
-                    url: this.video.url
-                })
+                casteaching.video.update(1,{name: 'PHP 101', description: 'Bla bla bla',  url: 'https://youtube.com/...' })
+
                 bus.$emit('updated')
                 bus.$emit('status', 'Video updated successfully')
             } catch (error) {
