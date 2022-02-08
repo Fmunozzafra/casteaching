@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VideoCreated;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Utils;
@@ -30,13 +31,16 @@ class VideosManageController extends Controller
      */
     public function store(Request $request)
     {
-        Video::create([
+        $video = Video::create([
             'title' => $request->title,
             'description' => $request->description,
             'url' => $request->url,
         ]);
 
         session()->flash('status', 'Successfully created');
+
+        VideoCreated::dispatch($video);
+
         return redirect()->route('manage.videos');
     }
 

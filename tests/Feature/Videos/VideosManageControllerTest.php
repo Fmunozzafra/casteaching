@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Tests\Feature\Traits\CanLogin;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 
 /**
 * @covers \App\Http\Controllers\VideosManageControllerTest
@@ -140,7 +141,10 @@ class VideosManageControllerTest extends TestCase
             'url' => 'url',
         ]);
 
+        Event::fake();
         $response = $this->post('/manage/videos',$videoArray);
+
+        Event::assertDispatched(VideoCreated::class);
 
         $response->assertRedirect(route('manage.videos'));
         $response->assertSessionHas('status', 'Successfully created');

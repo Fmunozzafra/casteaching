@@ -7808,7 +7808,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return window.api.video.destroy(_this.video.id);
+                return window.casteaching.video.destroy(_this.video.id);
 
               case 3:
                 _this.$emit('removed');
@@ -7974,7 +7974,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     store: function store() {
       try {
-        window.api.video.create({
+        window.casteaching.video.create({
           title: this.video.title,
           description: this.video.description,
           url: this.video.url
@@ -7987,7 +7987,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     update: function update() {
       try {
-        window.api.video.update(this.video.id, {
+        window.casteaching.video.update(this.video.id, {
           title: this.video.title,
           description: this.video.description,
           url: this.video.url
@@ -8169,7 +8169,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return window.api.videos();
+                return window.casteaching.videos();
 
               case 2:
                 _this2.videos = _context2.sent;

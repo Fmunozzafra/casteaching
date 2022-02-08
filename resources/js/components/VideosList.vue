@@ -85,7 +85,7 @@ export default
     },
     methods:{
         async getVideos(){
-            this.videos = await window.api.videos();
+            this.videos = await window.casteaching.videos();
         },
         async refresh(){
             this.getVideos();
