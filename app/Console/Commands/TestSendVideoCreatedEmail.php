@@ -39,6 +39,6 @@ class TestSendVideoCreatedEmail extends Command
      */
     public function handle()
     {
-        Notification::route('mail', 'sergiturbadenas@gmail.com')->notify(new VideoCreated(create_sample_video()));
+        Notification::route('mail', 'fmunoz@iesebre.com')->notify(new VideoCreated(create_sample_video()));
     }
 }
