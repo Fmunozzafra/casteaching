@@ -6,7 +6,7 @@
 
     <script>
         async function getVideos(){
-            return await window.axios.get('http://casteaching.test/api/videos')
+            return await window.axios.get('https://casteaching.ferranmunozzafra.me/api/videos')
         }
 
         document.getElementById('getVideos').addEventListener('click',async function (){
