@@ -30,5 +30,7 @@ use Illuminate\Support\Facades\Hash;
         create_user_manager_user();
 
         create_sample_series();
+
+        create_sergi_user();
     }
 }
