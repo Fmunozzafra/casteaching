@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Videos;
 
+use App\Events\VideoCreated;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Collection;
@@ -196,23 +197,80 @@ class VideosManageControllerTest extends TestCase
         $this->assertNull($video->published_at);
 
     }
+    /** @test  */
+    public function user_with_permissions_can_store_videos_with_user_id()
+    {
+        $this->loginAsVideoManager();
+
+        $user = User::create([
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepepardo@casteaching.com',
+            'password' => Hash::make('12345678')
+        ]);
+
+        $video = objectify($videoArray = [
+            'title' => 'HTTP for noobs',
+            'description' => 'Te ensenyo tot el que se sobre HTTP',
+            'url' => 'https://tubeme.acacha.org/http',
+            'user_id' => $user->id
+        ]);
+
+        Event::fake();
+        $response = $this->post('/manage/videos',$videoArray);
+
+        Event::assertDispatched(VideoCreated::class);
+
+        $response->assertRedirect(route('manage.videos'));
+        $response->assertSessionHas('status', 'Successfully created');
+
+        $videoDB = Video::first();
+
+        $this->assertNotNull($videoDB);
+        $this->assertEquals($videoDB->title,$video->title);
+        $this->assertEquals($videoDB->description,$video->description);
+        $this->assertEquals($videoDB->url,$video->url);
+        $this->assertEquals($videoDB->user_id,$user->id);
+        $this->assertNull($video->published_at);
+
+    }
 
     /** @test */
     public function title_is_required()
     {
-        $this->markTestIncomplete();
+        $this->loginAsVideoManager();
+        // Execució
+        $response = $this->post('/manage/videos',[
+            'description' => 'Te ensenyo tot el que se sobre HTTP',
+            'url' => 'https://tubeme.acacha.org/http',
+        ]);
+
+        $response->assertSessionHasErrors(['title']);
     }
 
     /** @test */
     public function description_is_required()
     {
-        $this->markTestIncomplete();
+        $this->loginAsVideoManager();
+        // Execució
+        $response = $this->post('/manage/videos',[
+            'title' => 'TDD 101',
+            'url' => 'https://tubeme.acacha.org/http',
+        ]);
+
+        $response->assertSessionHasErrors(['description']);
     }
 
     /** @test */
     public function url_is_required()
     {
-        $this->markTestIncomplete();
+        $this->loginAsVideoManager();
+        // Execució
+        $response = $this->post('/manage/videos',[
+            'title' => 'TDD 101',
+            'description' => 'Te ensenyo tot el que se sobre HTTP'
+        ]);
+
+        $response->assertSessionHasErrors(['url']);
     }
 
     /**
