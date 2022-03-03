@@ -28,5 +28,7 @@ use Illuminate\Support\Facades\Hash;
         create_video_manager_user();
 
         create_user_manager_user();
+
+        create_sample_series();
     }
 }
