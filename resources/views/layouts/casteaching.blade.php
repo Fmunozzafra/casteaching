@@ -19,6 +19,8 @@
         gtag('js', new Date());
         gtag('config', 'G-2Z380SERWJ');
     </script>
+
+
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
