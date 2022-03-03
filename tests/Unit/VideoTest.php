@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Video;
+use App\Models\Serie;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -23,7 +24,7 @@ class VideoTest extends TestCase
             'published_at' => Carbon::parse('December 13, 2020 8:00pm'),
             'previous' => null,
             'next' => null,
-            'series_id' => 1
+            'serie_id' => 1
         ]);
         //2 Execució
         $dateToTest = $video->formatted_published_at;
@@ -44,11 +45,39 @@ class VideoTest extends TestCase
             'published_at' => null,
             'previous' => null,
             'next' => null,
-            'series_id' => 1
+            'serie_id' => 1
         ]);
         //2 Execució
         $dateToTest = $video->formatted_published_at;
         // Comprovació
         $this->assertEquals($dateToTest, '');
+    }
+
+
+    /**
+     * @test
+     */
+    public function video_have_serie()
+    {
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://youtu.be/w8j07_DBl_I',
+        ]);
+
+        $this->assertNull($video->serie);
+
+        $serie = Serie::create([
+            'title' => 'Apren TDD',
+            'description' => 'Bla bla bla',
+            'image' => 'tdd.png',
+            'teacher_name' => 'Sergi Tur Badenas',
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com'),
+        ]);
+
+        $video->setSerie($serie);
+
+        $this->assertNotNull($video->fresh()->serie);
+
     }
 }

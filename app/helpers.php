@@ -48,7 +48,7 @@ if(! function_exists('create_default_video')) {
             'published_at' => Carbon::parse('December 13, 2020 8:00pm'),
             'previous' => null,
             'next' => null,
-            'series_id' => 1
+            'serie_id' => 1
         ]);
     }
 }
