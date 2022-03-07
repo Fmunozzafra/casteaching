@@ -8295,10 +8295,12 @@ window.casteaching = (0,_acacha_casteaching__WEBPACK_IMPORTED_MODULE_2__["defaul
 var vueApp = document.querySelector('#app');
 
 if (vueApp) {
+  console.log('prova');
   window.Vue = vue__WEBPACK_IMPORTED_MODULE_5__["default"];
   window.Vue.component('videos-list', _components_VideosList__WEBPACK_IMPORTED_MODULE_0__["default"]);
   window.Vue.component('video-form', _components_VideoForm__WEBPACK_IMPORTED_MODULE_3__["default"]);
   window.Vue.component('status', _components_Status__WEBPACK_IMPORTED_MODULE_4__["default"]);
+  console.log('xivato!');
   var app = new window.Vue({
     el: '#app'
   });
