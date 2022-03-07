@@ -13,11 +13,12 @@ window.casteaching = casteaching({baseUrl: '/api'});
 const vueApp = document.querySelector('#app')
 
 if(vueApp){
+    console.log('prova');
     window.Vue = Vue
     window.Vue.component('videos-list', VideosList )
     window.Vue.component('video-form', VideoForm )
     window.Vue.component('status', Status )
-
+    console.log('xivato!');
     const app = new window.Vue({
         el: '#app',
     });
