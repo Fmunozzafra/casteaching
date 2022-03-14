@@ -29,7 +29,7 @@ class GithubAuthController extends Controller
             //Log::debug($error);
             return redirect('/login')->withErrors(['msg' => 'An Error occurred!' . $error->getMessage()]);
         }
-        dd("hola");
+
 
         Auth::login(User::createUserFromGithub($githubUser));
 
