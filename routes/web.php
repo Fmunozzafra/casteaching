@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\GithubAuthController;
+use App\Http\Controllers\SeriesManageController;
 use App\Http\Controllers\UsersManageController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManageController;
 use App\Http\Controllers\VideosManageVueController;
 use GitHub\Sponsors\Client;
 use Illuminate\Support\Facades\Route;
+use Kanuu\Laravel\Facades\Kanuu;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -42,6 +44,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/vue/manage/videos/{id}',[ VideosManageVueController::class,'edit' ])->middleware(['can:videos_manage_edit']);
     Route::put('/vue/manage/videos/{id}',[ VideosManageVueController::class,'update' ])->middleware(['can:videos_manage_update']);
 });
+
+Route::get('/manage/series', [ SeriesManageController::class,'index'])->middleware(['can:series_manage_index'])
+    ->name('manage.series');
+
+Route::post('/manage/series',[ SeriesManageController::class,'store' ])->middleware(['can:series_manage_store']);
+Route::delete('/manage/series/{id}',[ SeriesManageController::class,'destroy' ])->middleware(['can:series_manage_destroy']);
+Route::get('/manage/series/{id}',[ SeriesManageController::class,'edit' ])->middleware(['can:series_manage_edit']);
+Route::put('/manage/series/{id}',[ SeriesManageController::class,'update' ])->middleware(['can:series_manage_update']);
+
 Route::get('/github_sponsors', function () {
     $client = app(Client::class);
     dump($sponsors = $client->login('acacha')->sponsors());
@@ -60,3 +71,7 @@ Route::get('/github_sponsors', function () {
 Route::get('/auth/redirect', [GithubAuthController::class,'redirect']);
 
 Route::get('/auth/callback', [GithubAuthController::class,'callback']);
+
+Kanuu::redirectRoute()
+    ->middleware('auth')
+    ->name('kanuu.redirect');
