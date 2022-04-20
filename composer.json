@@ -12,6 +12,8 @@
         "fruitcake/laravel-cors": "^2.0",
         "github-php/sponsors": "^0.3.2",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kanuu-io/kanuu-laravel": "^0.4.2",
+        "laravel/cashier-paddle": "^1.5",
         "laravel/framework": "^8.65",
         "laravel/jetstream": "^2.4",
         "laravel/sanctum": "^2.11",
@@ -47,6 +49,9 @@
         }
     },
     "scripts": {
+        "pre-update-cmd": [
+            "Statamic\\Console\\Composer\\Scripts::preUpdateCmd"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

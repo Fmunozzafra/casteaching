@@ -1,15 +1,19 @@
 <x-casteaching-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $serie->title }}
         </h2>
     </x-slot>
+
     <div class="flex flex-col mt-10">
+
         <div class="mx-auto sm:px-6 lg:px-8 w-full max-w-7xl">
 
             @can('series_manage_create')
+                <x-status></x-status>
 
-                <x-jet-form-section>
+                <x-jet-form-section data-qa="form_serie_edit">
                     <x-slot name="title">
                         {{ __('Series') }}
                     </x-slot>
@@ -43,18 +47,23 @@
 
                 <x-jet-section-border />
 
-                <x-jet-form-section submit="TODO">
+                <x-jet-form-section data-qa="form_serie_image_edit" action="/manage/series/{{ $serie->id }}/image" enctype="multipart/form-data">
                     <x-slot name="title">
                         {{ __('Imatge de la sèrie') }}
-                        @@ -77,12 +56,19 @@
+                    </x-slot>
+
+                    <x-slot name="description">
+                        {{ __('Aquí podeu modificar la vostra imatge') }}
                     </x-slot>
 
                     <x-slot name="form">
+                        @csrf
+                        @method('PUT')
                         <div class="col-span-6 sm:col-span-4">
                             <x-jet-label for="image" value="{{ __('Image') }}" />
                             <input type="file"
                                    id="image" name="image"
-                                   accept="image/png, image/jpeg">
+                                   accept="image/png, image/jpeg" required>
                             <x-jet-input-error for="image" class="mt-2" />
                         </div>
 
@@ -67,6 +76,10 @@
                     </x-slot>
                 </x-jet-form-section>
             @endcan
+
+
+
         </div>
     </div>
+
 </x-casteaching-layout>
