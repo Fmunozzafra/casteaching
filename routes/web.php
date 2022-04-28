@@ -8,7 +8,9 @@ use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManageController;
 use App\Http\Controllers\VideosManageVueController;
 use GitHub\Sponsors\Client;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Kanuu\Laravel\Facades\Kanuu;
 use Laravel\Socialite\Facades\Socialite;
 
 /*
@@ -76,3 +78,8 @@ Route::get('/auth/callback', [GithubAuthController::class,'callback']);
 Kanuu::redirectRoute()
     ->middleware('auth')
     ->name('kanuu.redirect');
+
+
+Route::get('/subscribe', function () {
+    return redirect(route('kanuu.redirect', Auth::user()));
+})->name('subscribe');

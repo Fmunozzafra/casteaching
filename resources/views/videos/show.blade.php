@@ -13,6 +13,7 @@
                 To: "opacity-0"
             -->
             <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
+
             <!--
               Off-canvas menu, show/hide based on off-canvas menu state.
               Entering: "transition ease-in-out duration-300 transform"
@@ -44,6 +45,7 @@
                         </svg>
                     </button>
                 </div>
+
                 <div class="flex-shrink-0 flex items-center px-4">
                     <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0 mr-2" src="/storage/{{ $video->serie?->image_url }}" alt="">
                     <span class="w-80 truncate">{{ $video->serie?->title }}</span>
@@ -65,7 +67,8 @@
                                         <span class="w-64 truncate" title="{{ $sVideo->title }}">{{ $sVideo->title }}</span>
                                     </a>
                                 @else
-                                    <a href="/videos/{{ $sVideo->id }}" class="w-80 text-gray-600 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md">                                        <!-- Heroicon name: outline/view-list -->
+                                    <a href="/videos/{{ $sVideo->id }}" class="w-80 text-gray-600 hover:text-gray-900 hover:bg-gray-50 group flex items-center px-2 py-2 text-base leading-5 font-medium rounded-md">
+                                        <!-- Heroicon name: outline/view-list -->
                                         <svg class="text-gray-400 group-hover:text-gray-500 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                                         </svg>
@@ -77,6 +80,7 @@
                     </nav>
                 </div>
             </div>
+
             <div class="flex-shrink-0 w-14" aria-hidden="true">
                 <!-- Dummy element to force sidebar to shrink to fit close icon -->
             </div>
@@ -95,10 +99,11 @@
                         <button type="button" class="group w-full bg-gray-100 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-500" id="options-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="flex w-full justify-between items-center">
                               <span class="flex min-w-0 items-center justify-between space-x-3">
-                                    <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="{{ $video->serie?->teacher_photo_url}}" alt="{{ $video->serie?->teacher_name }}">
-                                  <span class="flex-1 flex flex-col min-w-0">
-                                      <span class="text-gray-900 text-sm font-medium truncate">{{ $video->serie?->teacher_name }}</span>
-                                      <span class="text-gray-500 text-sm truncate">@jessyschwarz</span>
+                                <img class="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src="{{ $video->serie?->teacher_photo_url}}" alt="{{ $video->serie?->teacher_name }}">
+
+                                <span class="flex-1 flex flex-col min-w-0">
+                                  <span class="text-gray-900 text-sm font-medium truncate">{{ $video->serie?->teacher_name }}</span>
+                                  <span class="text-gray-500 text-sm truncate">@jessyschwarz</span>
                                 </span>
                               </span>
                             </span>
@@ -182,6 +187,7 @@
                                     <img class="h-8 w-8 rounded-full" src="{{ $video->serie?->teacher_photo_url }}" alt="">
                                 </button>
                             </div>
+
                             <!--
                               Dropdown menu, show/hide based on menu state.
                               Entering: "transition ease-out duration-100"
@@ -196,8 +202,13 @@
                 </div>
             </div>
             <div class="flex-1">
-                @include('videos.show_main')
+                @if($video->canBeDisplayed())
+                    @include('videos.show_main')
+                @else
+                    @include('videos.show_main_needs_subscription')
+                @endif
             </div>
         </div>
     </div>
+
 </x-casteaching-layout>
