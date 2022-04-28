@@ -13,6 +13,7 @@ use Tests\TestCase;
 class VideoTest extends TestCase
 {
     use RefreshDatabase;
+
     /**
      * @test
      */
