@@ -1,48 +1,43 @@
 <?php
-
 namespace Tests\Feature;
-
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
-
 /**
  * @covers \App\Http\Controllers\SanctumTokenController
  */
 class SanctumTokenControllerTest extends TestCase
 {
     use RefreshDatabase;
-
     /** @test */
     public function email_is_required_for_issuing_tokens()
     {
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
             'password' => '12345678',
-            'device_name' => "Ferran's device",
+            'device_name' => "Pepe's device",
         ]);
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The email field is required.",$jsonResponse->message);
         $this->assertEquals("The email field is required.",$jsonResponse->errors->email[0]);
 
     }
-
     /** @test */
     public function email_is_valid_for_issuing_tokens()
     {
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
-            'email' => 'emailnovalid',
+            'email' => 'notvalidemail',
             'password' => '12345678',
-            'device_name' => "Ferran's device",
+            'device_name' => "Pepe's device",
         ]);
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The email must be a valid email address.",$jsonResponse->message);
         $this->assertEquals("The email must be a valid email address.",$jsonResponse->errors->email[0]);
     }
 
@@ -51,13 +46,13 @@ class SanctumTokenControllerTest extends TestCase
     {
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
-            'email' => 'fmunoz@iesebre.com',
-            'device_name' => "Ferran's device",
+            'email' => 'sergiturbadenas@gmail.com',
+            'device_name' => "Pepe's device",
         ]);
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The password field is required.",$jsonResponse->message);
         $this->assertEquals("The password field is required.",$jsonResponse->errors->password[0]);
     }
 
@@ -66,13 +61,13 @@ class SanctumTokenControllerTest extends TestCase
     {
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
-            'email' => 'fmunoz@iesebre.com',
+            'email' => 'sergiturbadenas@gmail.com',
             'password' => '12345678',
         ]);
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The device name field is required.",$jsonResponse->message);
         $this->assertEquals("The device name field is required.",$jsonResponse->errors->device_name[0]);
     }
 
@@ -81,11 +76,10 @@ class SanctumTokenControllerTest extends TestCase
     {
         // Preparació
         $user = User::create([
-            'name' => 'Ferran Muñoz Zafra',
-            'email' => 'fmunoz@iesebre.com',
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepe@pardojeans.com',
             'password' => '12345678'
         ]);
-
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
             'email' => $user->email,
@@ -95,7 +89,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->message);
         $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->errors->email[0]);
     }
 
@@ -104,11 +98,10 @@ class SanctumTokenControllerTest extends TestCase
     {
         // Preparació
         $user = User::create([
-            'name' => 'Ferran Muñoz Zafra',
-            'email' => 'fmunoz@iesebre.com',
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepe@pardojeans.com',
             'password' => '12345678'
         ]);
-
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
             'email' => 'another_email@gmail.com',
@@ -118,7 +111,7 @@ class SanctumTokenControllerTest extends TestCase
 
         $response->assertStatus(422);
         $jsonResponse = json_decode($response->getContent());
-        $this->assertEquals("The given data was invalid.",$jsonResponse->message);
+        $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->message);
         $this->assertEquals("The provided credentials are incorrect.",$jsonResponse->errors->email[0]);
     }
 
@@ -127,24 +120,20 @@ class SanctumTokenControllerTest extends TestCase
     {
         // Preparació
         $user = User::create([
-            'name' => 'Ferran Muñoz Zafra',
-            'email' => 'fmunoz@iesebre.com',
+            'name' => 'Pepe Pardo Jeans',
+            'email' => 'pepe@pardojeans.com',
             'password' => Hash::make('12345678')
         ]);
-
         $this->assertCount(0,$user->tokens);
-
         // Execució
         $response = $this->postJson('/api/sanctum/token',[
             'email' => $user->email,
             'password' => '12345678',
             'device_name' => $user->name . "'s device",
         ]);
-
         //Comprovació
         $response->assertStatus(200);
         $this->assertNotNull($response->getContent());
         $this->assertCount(1,$user->fresh()->tokens);
-
     }
 }
